@@ -1,17 +1,12 @@
 // кейс на авторизацию пользователя
 
 import io.restassured.RestAssured;
-import io.restassured.http.Headers;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class Letter_2_task_5 {
@@ -24,6 +19,7 @@ public class Letter_2_task_5 {
                 "google","1q2w3e4r5t","123qwe","zxcvbnm","1q2w3e"};
 
         int N = password.length;
+        System.out.println(N);
 
         for (int i = 0; i<=N-1; i++){
 
@@ -39,25 +35,32 @@ public class Letter_2_task_5 {
                     .post("https://playground.learnqa.ru/ajax/api/get_secret_password_homework")
                     .andReturn();
 
-            Map<String, String> cookies = responseGetAuth.getCookies();
+            String auth_cookie = responseGetAuth.getCookie("auth_cookie");
+            System.out.println(" auth_cookie  " + auth_cookie);
+
+            Map<String, String> cookies = new HashMap<>();
+            cookies.put("auth_cookie",auth_cookie);
+
 
             //assertEquals(200, responseGetAuth.statusCode(), "Expected status code"); // проверяем, что пришел статус код 200
-            assertTrue(cookies.containsKey("auth_cookie"), "Response doesn't have 'auth_cookie' cookie"); // проверяем, что во всем списке, полученных куки содержится куки "auth_cookie"
+            //assertTrue(cookies.containsKey("auth_cookie"), "Response doesn't have 'auth_cookie' cookie"); // проверяем, что во всем списке, полученных куки содержится куки "auth_cookie"
 
             //String auth_cookie = ("auth_cookie"); // получаем и сохряняем нужную cookie
-            System.out.println("вот   " + responseGetAuth.getCookie("auth_cookie"));
+            //System.out.println("вот   " + responseGetAuth.getCookie("auth_cookie"));
 
             Response responseCheckAuth = RestAssured
                     .given()
-                    .cookie("auth_cookie", responseGetAuth.getCookie("auth_cookie"))
+                    .cookies(cookies)
                     .get("https://playground.learnqa.ru/ajax/api/check_auth_cookie")
                     .andReturn();
 
-            responseCheckAuth.prettyPrint();
+            responseCheckAuth.print();
+
 
             String message = "You are authorized";
+            //System.out.println(message);
 
-            if(message.equals(responseCheckAuth)){
+            if(responseCheckAuth.equals(message)){
                 System.out.println(password[i]);
                 System.out.println(responseCheckAuth);
                 break;
