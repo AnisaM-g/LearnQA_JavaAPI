@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class Letter_2_task_5 {
@@ -14,9 +15,7 @@ public class Letter_2_task_5 {
     @Test
 
     public void testAuthUser() {
-        String[] password = {"123456", "12345679", "qwerty", "12345678", "111111", "1234567890", "1234567", "password", "123123", "987654321",
-                "qwertyuiop", "mynoob", "123321", "666666", "18atcskd2w", "7777777", "1q2w3e4r", "654321", "555555", "3rjs1la7qe",
-                "google","1q2w3e4r5t","123qwe","zxcvbnm","1q2w3e"};
+        String[] password = {"welcome", "12345679"};
 
         int N = password.length;
         System.out.println(N);
@@ -42,11 +41,10 @@ public class Letter_2_task_5 {
             cookies.put("auth_cookie",auth_cookie);
 
 
-            //assertEquals(200, responseGetAuth.statusCode(), "Expected status code"); // проверяем, что пришел статус код 200
+            assertEquals(200, responseGetAuth.statusCode(), "Expected status code"); // проверяем, что пришел статус код 200
             //assertTrue(cookies.containsKey("auth_cookie"), "Response doesn't have 'auth_cookie' cookie"); // проверяем, что во всем списке, полученных куки содержится куки "auth_cookie"
 
-            //String auth_cookie = ("auth_cookie"); // получаем и сохряняем нужную cookie
-            //System.out.println("вот   " + responseGetAuth.getCookie("auth_cookie"));
+            System.out.println("вот   " + responseGetAuth.getCookie("auth_cookie"));
 
             Response responseCheckAuth = RestAssured
                     .given()
@@ -56,19 +54,30 @@ public class Letter_2_task_5 {
 
             responseCheckAuth.print();
 
+            //String text = responseCheckAuth.asString();
+           // System.out.println((text));
+
+
+
 
             String message = "You are authorized";
-            //System.out.println(message);
 
-            if(responseCheckAuth.equals(message)){
-                System.out.println(password[i]);
-                System.out.println(responseCheckAuth);
-                break;
 
-            }
-            else {
-                System.out.println(i);
-            }
+
+            //assertEquals(message, responseCheckAuth, "The answer is not expected");
+
+            //System.out.print(responseCheckAuth);
+            //message.print();
+
+            //if(("You are authorized".equals(responseCheckAuth)) == true){
+                //System.out.println(password[i]);
+               // System.out.println(responseCheckAuth);
+                //break;
+
+            //}
+            //else {
+             //   System.out.println(i);
+            //}
 
         }
 
