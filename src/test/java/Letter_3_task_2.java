@@ -19,9 +19,7 @@ public class Letter_3_task_2 {
 
     public void getCookie() {
 
-        Response response = RestAssured
-                .get("https://playground.learnqa.ru/api/homework_cookie")
-                .andReturn();
+        Response response = RestAssured.get("https://playground.learnqa.ru/api/homework_cookie").andReturn();
 
 
         Map<String, String> responseCookies = response.getCookies();
