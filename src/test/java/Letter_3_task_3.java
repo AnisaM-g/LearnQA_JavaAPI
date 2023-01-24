@@ -1,9 +1,10 @@
-/* Написать тест, который делает запрос на метод: https://playground.learnqa.ru/api/homework_cookie
-Этот метод возвращает какую-то cookie с каким-то значением. Необходимо понять что за cookie и с каким значением,
-и зафиксировать это поведение с помощью assert.
+/* Необходимо написать тест, который делает запрос на метод: https://playground.learnqa.ru/api/homework_header
+Этот метод возвращает headers с каким-то значением.
+Необходимо понять что за headers и с каким значением, и зафиксировать это поведение с помощью assert
  */
 
 import io.restassured.RestAssured;
+import io.restassured.http.Headers;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 
@@ -17,20 +18,22 @@ public class Letter_3_task_3 {
 
     @Test
 
-    public void getCookie() {
+    public void getHeaders() {
 
         Response response = RestAssured
-                .get("https://playground.learnqa.ru/api/homework_cookie")
+                .get("https://playground.learnqa.ru/api/homework_header")
                 .andReturn();
 
+        Headers responseHeaders = response.getHeaders();
+        System.out.println(responseHeaders);
+        String headerHomeWork = response.getHeader("x-secret-homework-header");
+        System.out.println(headerHomeWork);
 
-        Map<String, String> responseCookies = response.getCookies();
-        System.out.println(responseCookies);
-        String cookieHomeWork = response.getCookie("HomeWork");
-        System.out.println(cookieHomeWork);
+        assertTrue(responseHeaders.hasHeaderWithName("x-secret-homework-header"), "Response does not have 'headerHomeWork' header");
+        assertEquals("Some secret value", response.getHeader("x-secret-homework-header"), "Response does not have 'headerHomeWork'");
 
-        assertTrue(responseCookies.containsKey("HomeWork"), "Response do not key 'HomeWork'");
-        assertEquals("hw_value", response.getCookie("HomeWork"), "Response do not key 'HomeWork'");
+
+
 
     }
 
