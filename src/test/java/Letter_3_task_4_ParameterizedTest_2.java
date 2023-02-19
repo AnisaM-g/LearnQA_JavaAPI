@@ -115,18 +115,12 @@ public class Letter_3_task_4_ParameterizedTest_2 {
         Map<String, String> devices = new HashMap<>();
         devices.put("device", device);
 
-
-
         JsonPath response = RestAssured
                 .given()
                 .headers(headerUserAgent)
                 .when()
                 .get("https://playground.learnqa.ru/ajax/api/user_agent_check")
                 .jsonPath();
-
-
-
-        //response.prettyPrint();
 
         String responsePlatform = response.getString("platform");
         assertEquals(platforms.get("platform"), responsePlatform, headerUserAgent.get("User-Agent"));
