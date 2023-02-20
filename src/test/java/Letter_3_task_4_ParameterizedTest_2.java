@@ -125,7 +125,7 @@ public class Letter_3_task_4_ParameterizedTest_2 {
         String responsePlatform = response.getString("platform");
         assertEquals(platforms.get("platform"), responsePlatform, headerUserAgent.get("User-Agent"));
 
-        String responseBrawser = response.getString("brawser");
+        String responseBrawser = response.getString("browser");
         assertEquals(browsers.get("browser"), responseBrawser, headerUserAgent.get("User-Agent"));
 
         String responseDevice = response.getString("device");
