@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="api-test-example-restassured" />
+        <module name="abc" />
       </profile>
     </annotationProcessing>
   </component>
